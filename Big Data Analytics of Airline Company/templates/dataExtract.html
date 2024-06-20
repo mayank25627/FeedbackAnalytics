@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Extraction</title>
+
+  <style>
+
+    /* Center loading and success messages */
+#loading,
+#success {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  display: none;
+  z-index: 999; /* Ensure it's above other content */
+  text-align: center;
+}
+
+/* Animation for loading and success messages */
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.fadeInOut {
+  animation: fadeInOut 2s ease-out;
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the form items horizontally */
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+input[type="number"] {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px; /* Add some space below the input */
+}
+
+button[type="submit"],
+#service2 {
+  width: 300px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 10px; /* Add some space below the buttons */
+}
+
+button[type="submit"]:hover,
+#service2:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+#loading,
+#success {
+  display: none; /* Hide these elements by default */
+}
+
+
+  </style>
+</head>
+<body>
+  <h2>Data Extraction</h2>
+  <form id="data-extraction-form">
+    <label for="max-pages">Maximum Pages:</label>
+    <input type="number" id="max-pages" name="max-pages" value="100" min="1">
+    
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" name="start-date">
+    
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" name="end-date">
+
+    <button type="submit">Start Extraction</button>
+    <button id="service2">Make Predication</button>
+  
+  </form>
+
+  <!-- Add an element to display the message -->
+  <div id="message"></div>
+
+  <!-- Add a loading spinner or text -->
+  <div id="loading" style="display: none;">Loading...</div>
+
+  <!-- Add a success message -->
+  <div id="success" style="display: none;">Data successfully extracted and saved locally.</div>
+
+  <script>
+    document.getElementById("data-extraction-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      // Get the values of max-pages, start date, and end date inputs
+      var maxPages = document.getElementById("max-pages").value;
+      var startDate = document.getElementById("start-date").value;
+      var endDate = document.getElementById("end-date").value;
+
+      // Show loading message
+      document.getElementById("loading").style.display = "block";
+
+      // Send data to Flask backend using fetch API
+      fetch("/service1", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json" // Set Content-Type header to JSON
+          },
+          body: JSON.stringify({ 
+              maxPages: maxPages,
+              startDate: startDate,
+              endDate: endDate
+          })
+      })
+      .then(response => {
+          if (response.ok) {
+              console.log("Extraction started successfully!");
+              // Hide loading message
+              document.getElementById("loading").style.display = "none";
+              // Show success message
+              document.getElementById("success").style.display = "block";
+          } else {
+              console.error("Extraction failed!");
+          }
+      })
+      .catch(error => {
+          console.error("Error occurred:", error);
+      });
+    });
+
+    document.getElementById("service2").addEventListener("click", function() {
+      window.location.href = "/service2"; // Redirect to the Flask route for Service 2
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Dashboard</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    #dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .chart-container {
+      margin: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .chart-container h2 {
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .chart {
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .chart img {
+      max-width: 100%;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .chart:hover img {
+      transform: scale(1.05);
+    }
+
+    #headings{
+        text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+
+    <div id="headings">
+        <h1>Dashboard</h1>
+    </div>
+
+  <div id="dashboard">
+    <div class="chart-container">
+      <h2>Entertainment Services</h2>
+      {% if plot_entertainment %}
+      <div class="chart">
+        <img src="data:image/png;base64,{{ plot_entertainment }}" alt="Entertainment Services">
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="chart-container">
+      <h2>Food Catering Services</h2>
+      {% if plot_food_catering %}
+      <div class="chart">
+        <img src="data:image/png;base64,{{ plot_food_catering }}" alt="Food Catering Services">
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="chart-container">
+      <h2>Ground Services</h2>
+      {% if plot_Ground %}
+      <div class="chart">
+        <img src="data:image/png;base64,{{ plot_Ground }}" alt="Ground Services">
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="chart-container">
+      <h2>Seat Comfort Services</h2>
+      {% if plot_SeatComfart %}
+      <div class="chart">
+        <img src="data:image/png;base64,{{ plot_SeatComfart }}" alt="Seat Comfort Services">
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="chart-container">
+      <h2>InFlight Services</h2>
+      {% if plot_inFlight %}
+      <div class="chart">
+        <img src="data:image/png;base64,{{ plot_inFlight }}" alt="InFlight Services">
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="chart-container">
+      <h2>Over All Services</h2>
+      {% if plot_OverAll %}
+      <div class="chart">
+        <img src="data:image/png;base64,{{ plot_OverAll }}" alt="Over All Services">
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="chart-container">
+      <h2>Recommended By Users</h2>
+      {% if plot_recommended %}
+      <div class="chart">
+        <img src="data:image/png;base64,{{ plot_recommended }}" alt="Recommended">
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+</body>
+</html>
